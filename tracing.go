@@ -91,3 +91,39 @@ func SpanFromContext(tracer opentracing.Tracer, operationName string, abortOnErr
 		ctx.Next()
 	}
 }
+
+// InjectToHeaders injects span meta-information to request headers.
+//
+// It may be useful when you want to trace chained request (client->service 1->service 2).
+// In this case you have to save request headers (ctx.Request.Header) and pass it to next level request.
+//
+// Behaviour on errors determined by abortOnErrors option. If it set to true request handling will be aborted with error.
+func InjectToHeaders(tracer opentracing.Tracer, abortOnErrors bool) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var spanContext opentracing.SpanContext
+		spanI, _ := ctx.Get(spanContextKey)
+		if span, typeOk := spanI.(opentracing.Span); span != nil && typeOk {
+			spanContext = span.Context()
+		} else {
+			if abortOnErrors {
+				ctx.AbortWithStatusJSON(http.StatusInternalServerError, ErrSpanNotFound)
+			}
+			return
+		}
+
+		tracer.Inject(spanContext, opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(ctx.Request.Header))
+	}
+}
+
+// GetSpan extracts span from context.
+func GetSpan(ctx *gin.Context) (span opentracing.Span, exists bool) {
+	spanI, _ := ctx.Get(spanContextKey)
+	span, ok := spanI.(opentracing.Span)
+	exists = span == nil && !ok
+	return
+}
+
+// MustGetSpan extracts span from context. It panics if span was not set.
+func MustGetSpan(ctx *gin.Context) opentracing.Span {
+	return ctx.MustGet(spanContextKey).(opentracing.Span)
+}

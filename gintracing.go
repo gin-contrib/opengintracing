@@ -13,10 +13,6 @@ import (
 
 const spanContextKey = "span"
 
-// AbortOnErrors determines middleware behavior on errors.
-// If set to true middleware aborts request with http.InternalServerError.
-var AbortOnErrors = false
-
 // Errors which may occur at operation time.
 var (
 	ErrSpanNotFound = errors.New("span was not found in context")
@@ -44,12 +40,14 @@ type ParentSpanReferenceFunc func(opentracing.SpanContext) opentracing.StartSpan
 // starts a new span referenced to parent with ParentSpanReferenceFunc.
 //
 // It calls ctx.Next() to measure execution time of all following handlers.
-func SpanFromHeaders(tracer opentracing.Tracer, operationName string,
-	psr ParentSpanReferenceFunc, advancedOpts ...opentracing.StartSpanOption) gin.HandlerFunc {
+//
+// Behaviour on errors determined by abortOnErrors option. If it set to true request handling will be aborted with error.
+func SpanFromHeaders(tracer opentracing.Tracer, operationName string, psr ParentSpanReferenceFunc,
+	abortOnErrors bool, advancedOpts ...opentracing.StartSpanOption) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		spanContext, err := tracer.Extract(opentracing.TextMap, opentracing.HTTPHeadersCarrier(ctx.Request.Header))
 		if err != nil {
-			if AbortOnErrors {
+			if abortOnErrors {
 				ctx.AbortWithError(http.StatusInternalServerError, err)
 			}
 			return
@@ -69,7 +67,9 @@ func SpanFromHeaders(tracer opentracing.Tracer, operationName string,
 // and starts a new span as child of parent span.
 //
 // It calls ctx.Next() to measure execution time of all following handlers.
-func SpanFromContext(tracer opentracing.Tracer, operationName string,
+//
+// Behaviour on errors determined by abortOnErrors option. If it set to true request handling will be aborted with error.
+func SpanFromContext(tracer opentracing.Tracer, operationName string, abortOnErrors bool,
 	advancedOpts ...opentracing.StartSpanOption) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var opts []opentracing.StartSpanOption
@@ -77,7 +77,7 @@ func SpanFromContext(tracer opentracing.Tracer, operationName string,
 		if parentSpan, typeOk := parentSpanI.(opentracing.Span); parentSpan != nil && typeOk {
 			opts = append(opts, opentracing.ChildOf(parentSpan.Context()))
 		} else {
-			if AbortOnErrors {
+			if abortOnErrors {
 				ctx.AbortWithError(http.StatusInternalServerError, ErrSpanNotFound)
 			}
 			return

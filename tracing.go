@@ -119,7 +119,7 @@ func InjectToHeaders(tracer opentracing.Tracer, abortOnErrors bool) gin.HandlerF
 func GetSpan(ctx *gin.Context) (span opentracing.Span, exists bool) {
 	spanI, _ := ctx.Get(spanContextKey)
 	span, ok := spanI.(opentracing.Span)
-	exists = span == nil && !ok
+	exists = span != nil && ok
 	return
 }
 

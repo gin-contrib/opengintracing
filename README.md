@@ -77,7 +77,7 @@ func main() {
     ...
 }
 ```
-Also don`t forget to forward headers from "Service 1" to "Service 2"
+Also don`t forget to forward headers from "Service 1" to "Service 3"
 * On "Service 3" injecting to headers is not required
 ```go
 package main

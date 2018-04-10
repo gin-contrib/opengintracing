@@ -8,7 +8,7 @@ trace requests using opentracing specification
 
 Download:
 ```shell
-go get github.com/gin-contrib/tracing
+go get github.com/gin-contrib/opengintracing
 ```
 
 * * *

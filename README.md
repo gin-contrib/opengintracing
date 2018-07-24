@@ -1,6 +1,6 @@
 # tracing
-[![Go Report Card](https://goreportcard.com/badge/github.com/gin-contrib/tracing)](https://goreportcard.com/report/github.com/gin-contrib/tracing)
-[![GoDoc](https://godoc.org/github.com/gin-contrib/tracing?status.png)](https://godoc.org/github.com/gin-contrib/tracing)
+[![Go Report Card](https://goreportcard.com/badge/github.com/gin-contrib/opengintracing)](https://goreportcard.com/report/github.com/gin-contrib/opengintracing)
+[![GoDoc](https://godoc.org/github.com/gin-contrib/opengintracing?status.png)](https://godoc.org/github.com/gin-contrib/opengintracing)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 trace requests using opentracing specification
@@ -28,7 +28,7 @@ package main
 import (
     ...
     "github.com/gin-gonic/gin"
-    "github.com/gin-contrib/tracing"
+    "github.com/gin-contrib/opengintracing"
     "github.com/opentracing/opentracing-go"
     ...
 )
@@ -57,7 +57,7 @@ package main
 import (
     ...
     "github.com/gin-gonic/gin"
-    "github.com/gin-contrib/tracing"
+    "github.com/gin-contrib/opengintracing"
     "github.com/opentracing/opentracing-go"
     ...
 )
@@ -84,7 +84,7 @@ package main
 import (
     ...
     "github.com/gin-gonic/gin"
-    "github.com/gin-contrib/tracing"
+    "github.com/gin-contrib/opengintracing"
     "github.com/opentracing/opentracing-go"
     ...
 )

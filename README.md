@@ -40,12 +40,12 @@ func main() {
     app := gin.Default()
 
     app.POST("/service1",
-        tracing.NewSpan(trace, "forward to service 1"),
-        tracing.InjectToHeaders(trace, true),
+        opengintracing.NewSpan(trace, "forward to service 1"),
+        opengintracing.InjectToHeaders(trace, true),
         service1handler)
     app.POST("/service2",
-        tracing.NewSpan(trace, "forward to service 2"),
-        tracing.InjectToHeaders(trace, true),
+        opengintracing.NewSpan(trace, "forward to service 2"),
+        opengintracing.InjectToHeaders(trace, true),
         service2handler)
     ...
 }
@@ -70,9 +70,9 @@ func main() {
     app := gin.Default()
 
     app.POST("",
-        tracing.SpanFromHeaders(trace, "operation", refFunc, true),
+        opengintracing.SpanFromHeaders(trace, "operation", refFunc, true),
         // don`t forget to inject if you want continue tracing in other service
-        tracing.InjectToHeaders(trace, true),
+        opengintracing.InjectToHeaders(trace, true),
         handler)
     ...
 }
@@ -97,7 +97,7 @@ func main() {
     app := gin.Default()
 
     app.POST("",
-        tracing.SpanFromHeaders(trace, "operation", refFunc, true),
+        opengintracing.SpanFromHeaders(trace, "operation", refFunc, true),
         handler)
     ...
 }

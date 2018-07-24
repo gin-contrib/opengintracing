@@ -1,7 +1,7 @@
 // Package tracing provides requests tracing functional using opentracing specification.
 //
 // See https://github.com/opentracing/opentracing-go for more information
-package opengintracing
+package tracing
 
 import (
 	"errors"

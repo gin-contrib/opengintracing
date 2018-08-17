@@ -36,7 +36,7 @@ func NewSpan(tracer opentracing.Tracer, operationName string, opts ...opentracin
 // See opentracing.SpanReferenceType
 type ParentSpanReferenceFunc func(opentracing.SpanContext) opentracing.StartSpanOption
 
-// SpanFromHeaders returns gin.HandlerFunc (middleware) that extracts parent span data from HTTP headers and
+// SpanFromHeaders returns gin.HandlerFunc (middleware) that extracts parent span data from HTTP headers in TextMap format and
 // starts a new span referenced to parent with ParentSpanReferenceFunc.
 //
 // It calls ctx.Next() to measure execution time of all following handlers.
@@ -46,6 +46,33 @@ func SpanFromHeaders(tracer opentracing.Tracer, operationName string, psr Parent
 	abortOnErrors bool, advancedOpts ...opentracing.StartSpanOption) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		spanContext, err := tracer.Extract(opentracing.TextMap, opentracing.HTTPHeadersCarrier(ctx.Request.Header))
+		if err != nil {
+			if abortOnErrors {
+				ctx.AbortWithError(http.StatusInternalServerError, err)
+			}
+			return
+		}
+
+		opts := append([]opentracing.StartSpanOption{psr(spanContext)}, advancedOpts...)
+
+		span := tracer.StartSpan(operationName, opts...)
+		ctx.Set(spanContextKey, span)
+		defer span.Finish()
+
+		ctx.Next()
+	}
+}
+
+// SpanFromHeadersHttpFmt returns gin.HandlerFunc (middleware) that extracts parent span data from HTTP headers in HTTPHeaders format and
+// starts a new span referenced to parent with ParentSpanReferenceFunc.
+//
+// It calls ctx.Next() to measure execution time of all following handlers.
+//
+// Behaviour on errors determined by abortOnErrors option. If it set to true request handling will be aborted with error.
+func SpanFromHeadersHttpFmt(tracer opentracing.Tracer, operationName string, psr ParentSpanReferenceFunc,
+	abortOnErrors bool, advancedOpts ...opentracing.StartSpanOption) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		spanContext, err := tracer.Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(ctx.Request.Header))
 		if err != nil {
 			if abortOnErrors {
 				ctx.AbortWithError(http.StatusInternalServerError, err)

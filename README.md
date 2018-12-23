@@ -1,4 +1,5 @@
 # tracing
+
 [![Go Report Card](https://goreportcard.com/badge/github.com/gin-contrib/opengintracing)](https://goreportcard.com/report/github.com/gin-contrib/opengintracing)
 [![GoDoc](https://godoc.org/github.com/gin-contrib/opengintracing?status.png)](https://godoc.org/github.com/gin-contrib/opengintracing)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -7,8 +8,9 @@ trace requests using opentracing specification
 
 
 Download:
+
 ```shell
-go get github.com/gin-contrib/opengintracing
+$ go get -u github.com/gin-contrib/opengintracing
 ```
 
 * * *
@@ -16,6 +18,7 @@ go get github.com/gin-contrib/opengintracing
 See https://github.com/opentracing/opentracing-go for more information
 
 ### Usage
+
 For example you have architecture like this
 
 ![Example architecture](example_architecture.png)
@@ -23,6 +26,7 @@ For example you have architecture like this
 To start requests tracing you have to:
 
 * On "API Gateway": start span, inject headers and pass it to services
+
 ```go
 package main
 import (
@@ -52,6 +56,7 @@ func main() {
 ```
 
 * On "Service 1", "Service 2" start span inherited from "API Gateway"`s span
+
 ```go
 package main
 import (
@@ -77,8 +82,11 @@ func main() {
     ...
 }
 ```
+
 Also don`t forget to forward headers from "Service 1" to "Service 3"
+
 * On "Service 3" injecting to headers is not required
+
 ```go
 package main
 import (

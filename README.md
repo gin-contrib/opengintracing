@@ -4,20 +4,15 @@
 [![GoDoc](https://godoc.org/github.com/gin-contrib/opengintracing?status.png)](https://godoc.org/github.com/gin-contrib/opengintracing)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-trace requests using opentracing specification
+trace requests using opentracing specification, Download:
 
-
-Download:
-
-```shell
-$ go get -u github.com/gin-contrib/opengintracing
+```bash
+go get -u github.com/gin-contrib/opengintracing
 ```
 
-* * *
+See [opentracing/opentracing-go](https://github.com/opentracing/opentracing-go) for more information.
 
-See https://github.com/opentracing/opentracing-go for more information
-
-### Usage
+## Usage
 
 For example you have architecture like this
 
@@ -111,7 +106,8 @@ func main() {
 }
 ```
 
-### TODO
-- [x] add code sample
-- [ ] maybe add sample with SpanFromContext
-- [ ] add buildable example (needed simple logging tracer)
+## TODO
+
+* [x] add code sample
+* [ ] maybe add sample with SpanFromContext
+* [ ] add buildable example (needed simple logging tracer)

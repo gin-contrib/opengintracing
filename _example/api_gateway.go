@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/gin-contrib/opengintracing"
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
 	"github.com/uber/jaeger-client-go"
 	"github.com/uber/jaeger-client-go/zipkin"
-	"net/http"
 )
 
 func main() {
@@ -36,7 +37,7 @@ func main() {
 }
 
 func printHeaders(message string, header http.Header) {
-    fmt.Println(message)
+	fmt.Println(message)
 	for k, v := range header {
 		fmt.Printf("%s: %s\n", k, v)
 	}

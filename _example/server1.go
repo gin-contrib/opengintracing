@@ -32,7 +32,7 @@ func main() {
 	// Set up routes
 	r := gin.Default()
 	r.POST("",
-		opengintracing.SpanFromHeadersHttpFmt(trace, "service1", fn, false),
+		opengintracing.SpanFromHeadersHTTPFmt(trace, "service1", fn, false),
 		handler)
 	r.Run(":8001")
 }

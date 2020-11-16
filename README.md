@@ -1,7 +1,7 @@
 # tracing
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/gin-contrib/opengintracing)](https://goreportcard.com/report/github.com/gin-contrib/opengintracing)
-[![GoDoc](https://godoc.org/github.com/gin-contrib/opengintracing?status.png)](https://godoc.org/github.com/gin-contrib/opengintracing)
+[![GoDoc](https://godoc.org/github.com/gin-contrib/opengintracing?status.png)](https://pkg.go.dev/github.com/gin-contrib/opengintracing)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 trace requests using opentracing specification, Download:

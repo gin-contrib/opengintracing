@@ -2,19 +2,20 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/gin-contrib/opengintracing"
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
 	"github.com/uber/jaeger-client-go"
 	"github.com/uber/jaeger-client-go/zipkin"
-	"net/http"
 )
 
 func main() {
 	// Configure tracing
 	propagator := zipkin.NewZipkinB3HTTPHeaderPropagator()
 	trace, closer := jaeger.NewTracer(
-		"api_gateway",
+		"server02",
 		jaeger.NewConstSampler(true),
 		jaeger.NewNullReporter(),
 		jaeger.TracerOptions.Injector(opentracing.HTTPHeaders, propagator),
@@ -31,7 +32,7 @@ func main() {
 	// Set up routes
 	r := gin.Default()
 	r.POST("",
-        opengintracing.SpanFromHeadersHttpFmt(trace, "service2", fn, false),
+		opengintracing.SpanFromHeadersHttpFmt(trace, "service2", fn, false),
 		handler)
 	r.Run(":8002")
 }

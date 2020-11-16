@@ -1,4 +1,4 @@
-// Package tracing provides requests tracing functional using opentracing specification.
+// Package opengintracing provides requests tracing functional using opentracing specification.
 //
 // See https://github.com/opentracing/opentracing-go for more information
 package opengintracing
@@ -63,13 +63,13 @@ func SpanFromHeaders(tracer opentracing.Tracer, operationName string, psr Parent
 	}
 }
 
-// SpanFromHeadersHttpFmt returns gin.HandlerFunc (middleware) that extracts parent span data from HTTP headers in HTTPHeaders format and
+// SpanFromHeadersHTTPFmt returns gin.HandlerFunc (middleware) that extracts parent span data from HTTP headers in HTTPHeaders format and
 // starts a new span referenced to parent with ParentSpanReferenceFunc.
 //
 // It calls ctx.Next() to measure execution time of all following handlers.
 //
 // Behaviour on errors determined by abortOnErrors option. If it set to true request handling will be aborted with error.
-func SpanFromHeadersHttpFmt(tracer opentracing.Tracer, operationName string, psr ParentSpanReferenceFunc,
+func SpanFromHeadersHTTPFmt(tracer opentracing.Tracer, operationName string, psr ParentSpanReferenceFunc,
 	abortOnErrors bool, advancedOpts ...opentracing.StartSpanOption) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		spanContext, err := tracer.Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(ctx.Request.Header))

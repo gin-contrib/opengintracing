@@ -1,4 +1,5 @@
 # tracing
+
 [![Go Report Card](https://goreportcard.com/badge/github.com/gin-contrib/opengintracing)](https://goreportcard.com/report/github.com/gin-contrib/opengintracing)
 [![GoDoc](https://godoc.org/github.com/gin-contrib/opengintracing?status.png)](https://godoc.org/github.com/gin-contrib/opengintracing)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -34,7 +35,7 @@ Header information is printed to stdout. You should see headers propagated from 
 
 On the API gateway:
 
-```
+```sh
 Incoming Headers
 User-Agent: [curl/7.47.0]
 Accept: [*/*]
@@ -46,7 +47,7 @@ X-B3-Sampled: [1]
 
 On service1:
 
-```
+```sh
 Incoming headers
 User-Agent: [Go-http-client/1.1]
 Content-Length: [0]
@@ -63,7 +64,7 @@ X-B3-Sampled: [1]
 
 On service3:
 
-```
+```sh
 Incoming Headers
 X-B3-Spanid: [aa66150e951c54c]
 X-B3-Traceid: [10386b198f22ca04]

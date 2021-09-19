@@ -48,7 +48,7 @@ func SpanFromHeaders(tracer opentracing.Tracer, operationName string, psr Parent
 		spanContext, err := tracer.Extract(opentracing.TextMap, opentracing.HTTPHeadersCarrier(ctx.Request.Header))
 		if err != nil {
 			if abortOnErrors {
-				ctx.AbortWithError(http.StatusInternalServerError, err)
+				_ = ctx.AbortWithError(http.StatusInternalServerError, err)
 			}
 			return
 		}
@@ -75,7 +75,7 @@ func SpanFromHeadersHTTPFmt(tracer opentracing.Tracer, operationName string, psr
 		spanContext, err := tracer.Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(ctx.Request.Header))
 		if err != nil {
 			if abortOnErrors {
-				ctx.AbortWithError(http.StatusInternalServerError, err)
+				_ = ctx.AbortWithError(http.StatusInternalServerError, err)
 			}
 			return
 		}
@@ -105,7 +105,7 @@ func SpanFromContext(tracer opentracing.Tracer, operationName string, abortOnErr
 			opts = append(opts, opentracing.ChildOf(parentSpan.Context()))
 		} else {
 			if abortOnErrors {
-				ctx.AbortWithError(http.StatusInternalServerError, ErrSpanNotFound)
+				_ = ctx.AbortWithError(http.StatusInternalServerError, ErrSpanNotFound)
 			}
 			return
 		}
@@ -138,7 +138,7 @@ func InjectToHeaders(tracer opentracing.Tracer, abortOnErrors bool) gin.HandlerF
 			return
 		}
 
-		tracer.Inject(spanContext, opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(ctx.Request.Header))
+		_ = tracer.Inject(spanContext, opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(ctx.Request.Header))
 	}
 }
 

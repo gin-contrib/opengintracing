@@ -45,7 +45,8 @@ type ParentSpanReferenceFunc func(opentracing.SpanContext) opentracing.StartSpan
 // Behaviour on errors determined by abortOnErrors option.
 // If it set to true request handling will be aborted with error.
 func SpanFromHeaders(tracer opentracing.Tracer, operationName string, psr ParentSpanReferenceFunc,
-	abortOnErrors bool, advancedOpts ...opentracing.StartSpanOption) gin.HandlerFunc {
+	abortOnErrors bool, advancedOpts ...opentracing.StartSpanOption,
+) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		spanContext, err := tracer.Extract(opentracing.TextMap, opentracing.HTTPHeadersCarrier(ctx.Request.Header))
 		if err != nil {
@@ -74,7 +75,8 @@ func SpanFromHeaders(tracer opentracing.Tracer, operationName string, psr Parent
 // Behaviour on errors determined by abortOnErrors option.
 // If it set to true request handling will be aborted with error.
 func SpanFromHeadersHTTPFmt(tracer opentracing.Tracer, operationName string, psr ParentSpanReferenceFunc,
-	abortOnErrors bool, advancedOpts ...opentracing.StartSpanOption) gin.HandlerFunc {
+	abortOnErrors bool, advancedOpts ...opentracing.StartSpanOption,
+) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		spanContext, err := tracer.Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(ctx.Request.Header))
 		if err != nil {
@@ -102,7 +104,8 @@ func SpanFromHeadersHTTPFmt(tracer opentracing.Tracer, operationName string, psr
 // Behaviour on errors determined by abortOnErrors option.
 // If it set to true request handling will be aborted with error.
 func SpanFromContext(tracer opentracing.Tracer, operationName string, abortOnErrors bool,
-	advancedOpts ...opentracing.StartSpanOption) gin.HandlerFunc {
+	advancedOpts ...opentracing.StartSpanOption,
+) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var opts []opentracing.StartSpanOption
 		parentSpanI, _ := ctx.Get(spanContextKey)

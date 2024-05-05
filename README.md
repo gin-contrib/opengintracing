@@ -17,7 +17,7 @@ See [opentracing/opentracing-go](https://github.com/opentracing/opentracing-go) 
 
 For example you have architecture like this
 
-![Example architecture](example_architecture.png)
+![Example architecture](images/example_architecture.png)
 
 To start requests tracing you have to:
 

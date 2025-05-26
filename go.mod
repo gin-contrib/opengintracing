@@ -3,7 +3,7 @@ module github.com/gin-contrib/opengintracing
 go 1.23.0
 
 require (
-	github.com/gin-gonic/gin v1.10.0
+	github.com/gin-gonic/gin v1.10.1
 	github.com/opentracing/opentracing-go v1.2.0
 )
 

@@ -1,6 +1,7 @@
 # tracing
 
 [![Run Tests](https://github.com/gin-contrib/opengintracing/actions/workflows/go.yml/badge.svg)](https://github.com/gin-contrib/opengintracing/actions/workflows/go.yml)
+[![Trivy Security Scan](https://github.com/gin-contrib/opengintracing/actions/workflows/trivy-scan.yml/badge.svg)](https://github.com/gin-contrib/opengintracing/actions/workflows/trivy-scan.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/gin-contrib/opengintracing)](https://goreportcard.com/report/github.com/gin-contrib/opengintracing)
 [![GoDoc](https://godoc.org/github.com/gin-contrib/opengintracing?status.png)](https://pkg.go.dev/github.com/gin-contrib/opengintracing)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

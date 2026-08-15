@@ -1,6 +1,6 @@
 # tracing
 
-[![GoDoc](https://godoc.org/github.com/gin-contrib/opengintracing?status.png)](https://godoc.org/github.com/gin-contrib/opengintracing)
+[![Go Reference](https://pkg.go.dev/badge/github.com/gin-contrib/opengintracing.svg)](https://pkg.go.dev/github.com/gin-contrib/opengintracing)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A simple implementation of the api gateway, server1, server2 and server3 examples.

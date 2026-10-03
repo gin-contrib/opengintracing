@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-contrib/opengintracing"
+
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
 	"github.com/uber/jaeger-client-go"
@@ -55,7 +56,8 @@ func service1handler(c *gin.Context) {
 	opentracing.GlobalTracer().Inject(
 		span.Context(),
 		opentracing.HTTPHeaders,
-		opentracing.HTTPHeadersCarrier(req.Header))
+		opentracing.HTTPHeadersCarrier(req.Header),
+	)
 
 	printHeaders("Incoming Headers", c.Request.Header)
 	printHeaders("Outgoing Headers", req.Header)
@@ -84,7 +86,8 @@ func service2handler(c *gin.Context) {
 	opentracing.GlobalTracer().Inject(
 		span.Context(),
 		opentracing.HTTPHeaders,
-		opentracing.HTTPHeadersCarrier(req.Header))
+		opentracing.HTTPHeadersCarrier(req.Header),
+	)
 
 	printHeaders("Incoming Headers", c.Request.Header)
 	printHeaders("Outgoing Headers", req.Header)

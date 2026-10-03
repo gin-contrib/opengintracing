@@ -21,7 +21,11 @@ var (
 // NewSpan returns gin.HandlerFunc (middleware) that starts a new span and injects it to request context.
 //
 // It calls ctx.Next() to measure execution time of all following handlers.
-func NewSpan(tracer opentracing.Tracer, operationName string, opts ...opentracing.StartSpanOption) gin.HandlerFunc {
+func NewSpan(
+	tracer opentracing.Tracer,
+	operationName string,
+	opts ...opentracing.StartSpanOption,
+) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		span := tracer.StartSpan(operationName, opts...)
 		ctx.Set(spanContextKey, span)
@@ -48,7 +52,10 @@ func SpanFromHeaders(tracer opentracing.Tracer, operationName string, psr Parent
 	abortOnErrors bool, advancedOpts ...opentracing.StartSpanOption,
 ) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		spanContext, err := tracer.Extract(opentracing.TextMap, opentracing.HTTPHeadersCarrier(ctx.Request.Header))
+		spanContext, err := tracer.Extract(
+			opentracing.TextMap,
+			opentracing.HTTPHeadersCarrier(ctx.Request.Header),
+		)
 		if err != nil {
 			if abortOnErrors {
 				_ = ctx.AbortWithError(http.StatusInternalServerError, err)
@@ -74,11 +81,18 @@ func SpanFromHeaders(tracer opentracing.Tracer, operationName string, psr Parent
 //
 // Behaviour on errors determined by abortOnErrors option.
 // If it set to true request handling will be aborted with error.
-func SpanFromHeadersHTTPFmt(tracer opentracing.Tracer, operationName string, psr ParentSpanReferenceFunc,
-	abortOnErrors bool, advancedOpts ...opentracing.StartSpanOption,
+func SpanFromHeadersHTTPFmt(
+	tracer opentracing.Tracer,
+	operationName string,
+	psr ParentSpanReferenceFunc,
+	abortOnErrors bool,
+	advancedOpts ...opentracing.StartSpanOption,
 ) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		spanContext, err := tracer.Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(ctx.Request.Header))
+		spanContext, err := tracer.Extract(
+			opentracing.HTTPHeaders,
+			opentracing.HTTPHeadersCarrier(ctx.Request.Header),
+		)
 		if err != nil {
 			if abortOnErrors {
 				_ = ctx.AbortWithError(http.StatusInternalServerError, err)
@@ -147,7 +161,11 @@ func InjectToHeaders(tracer opentracing.Tracer, abortOnErrors bool) gin.HandlerF
 			return
 		}
 
-		_ = tracer.Inject(spanContext, opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(ctx.Request.Header))
+		_ = tracer.Inject(
+			spanContext,
+			opentracing.HTTPHeaders,
+			opentracing.HTTPHeadersCarrier(ctx.Request.Header),
+		)
 	}
 }
 
@@ -156,7 +174,7 @@ func GetSpan(ctx *gin.Context) (span opentracing.Span, exists bool) {
 	spanI, _ := ctx.Get(spanContextKey)
 	span, ok := spanI.(opentracing.Span)
 	exists = span != nil && ok
-	return
+	return span, exists
 }
 
 // MustGetSpan extracts span from context. It panics if span was not set.

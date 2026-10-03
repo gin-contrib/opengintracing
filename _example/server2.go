@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-contrib/opengintracing"
+
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
 	"github.com/uber/jaeger-client-go"
